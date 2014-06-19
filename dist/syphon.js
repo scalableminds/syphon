@@ -7,7 +7,7 @@
     var $ = require('jquery');
     module.exports = factory(_, $);
   } else {
-    root.Syphon = factory(_, jQuery);
+    root.Syphon = factory(root._, root.jQuery);
   }
 
 }(this, function (_, $) {
@@ -484,7 +484,7 @@
     var matches = key.match(/[^\[\]]+/g);
     var lastKey;
   
-    if (key.indexOf("[]") === key.length - 2){
+    if (key.length > 1 && key.indexOf("[]") === key.length - 2){
       lastKey = matches.pop();
       matches.push([lastKey]);
     }

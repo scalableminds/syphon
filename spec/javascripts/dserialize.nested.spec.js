@@ -19,7 +19,7 @@ describe("deserializing nested key names", function(){
       view = new View();
       view.render();
 
-      Backbone.Syphon.deserialize(view, {
+      Syphon.deserialize(view, {
         widget: "wombat",
         foo: {
           bar: "baz",
@@ -62,10 +62,10 @@ describe("deserializing nested key names", function(){
       view = new View();
       view.render();
 
-      var writers = new Backbone.Syphon.InputWriterSet();
-      writers.register("checkbox", function($el, value){
-        if (_.include(value, $el.val())){
-          $el.prop("checked", true);
+      var writers = new Syphon.InputWriterSet();
+      writers.register("checkbox", function(el, value){
+        if (_.include(value, $(el).val())){
+          $(el).prop("checked", true);
         }
       });
 
@@ -75,19 +75,19 @@ describe("deserializing nested key names", function(){
         }
       };
 
-      result = Backbone.Syphon.deserialize(view, data, {
+      result = Syphon.deserialize(view, data, {
         inputWriters: writers
       });
     });
 
     it("should select the first checkbox", function(){
       var chk = view.$("[name='foo[bar][]'][value='baz']");
-      expect(chk).toBeChecked(); 
+      expect(chk).toBeChecked();
     });
 
     it("should select the second checkbox", function(){
       var chk = view.$("[name='foo[bar][]'][value='qux']");
-      expect(chk).toBeChecked(); 
+      expect(chk).toBeChecked();
     });
 
   });
@@ -108,16 +108,16 @@ describe("deserializing nested key names", function(){
     var view, result;
 
     beforeEach(function() {
-      this.keyJoiner = Backbone.Syphon.KeyJoiner;
+      this.keyJoiner = Syphon.KeyJoiner;
 
-      Backbone.Syphon.KeyJoiner = function(parentKey, childKey){
+      Syphon.KeyJoiner = function(parentKey, childKey){
         return [parentKey, childKey].join(".");
       }
-      
+
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.deserialize(view,{
+      result = Syphon.deserialize(view,{
         widget: "wombat",
         foo: {
           bar: "baz",
@@ -129,7 +129,7 @@ describe("deserializing nested key names", function(){
     });
 
     afterEach(function(){
-      Backbone.Syphon.KeyJoiner = this.keyJoiner;
+      Syphon.KeyJoiner = this.keyJoiner;
     });
 
     it("should set root values",function() {

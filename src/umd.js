@@ -7,7 +7,7 @@
     var $ = require('jquery');
     module.exports = factory(_, $);
   } else {
-    root.Syphon = factory(_, jQuery);
+    root.Syphon = factory(root._, root.jQuery);
   }
 
 }(this, function (_, $) {

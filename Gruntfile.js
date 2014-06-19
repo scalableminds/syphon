@@ -4,6 +4,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-rigger');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
 
   // Project configuration.
   grunt.initConfig({
@@ -54,10 +55,28 @@ module.exports = function(grunt) {
           _: true
         }
       }
+    },
+
+    jasmine: {
+      test: {
+        src: [
+          'dist/syphon.js'
+        ],
+        options: {
+          keepRunner: true,
+          vendor: [
+            'spec/javascripts/support/underscore.js',
+            'spec/javascripts/support/jquery.js',
+            'spec/javascripts/support/backbone.js'
+          ],
+          specs: 'spec/javascripts/*.spec.js',
+          helpers: 'spec/javascripts/helpers/*.js'
+        }
+      }
     }
   });
 
   // Default task.
-  grunt.registerTask('default', ['rig', 'jshint', 'uglify']);
+  grunt.registerTask('default', ['rig', 'jshint', 'uglify', 'jasmine']);
 
 };

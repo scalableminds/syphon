@@ -5,3 +5,5 @@
 tmp/
 ext/
 node_modules
+.grunt
+_SpecRunner.html

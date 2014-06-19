@@ -19,7 +19,7 @@ describe("serializing nested key names", function(){
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view);
+      result = Syphon.serialize(view);
     });
 
     it("has a property defined",function() {
@@ -66,12 +66,12 @@ describe("serializing nested key names", function(){
       view = new View();
       view.render();
 
-      var inputReaders = new Backbone.Syphon.InputReaderSet();
-      inputReaders.register("checkbox", function($el){
-        return $el.val();
+      var inputReaders = new Syphon.InputReaderSet();
+      inputReaders.register("checkbox", function(el){
+        return $(el).val();
       });
 
-      result = Backbone.Syphon.serialize(view, {
+      result = Syphon.serialize(view, {
         inputReaders: inputReaders
       });
     });
@@ -105,20 +105,20 @@ describe("serializing nested key names", function(){
     var view, result;
 
     beforeEach(function() {
-      this.keySplitter = Backbone.Syphon.KeySplitter;
+      this.keySplitter = Syphon.KeySplitter;
 
-      Backbone.Syphon.KeySplitter = function(key){
+      Syphon.KeySplitter = function(key){
         return key.split(".");
       }
-      
+
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view);
+      result = Syphon.serialize(view);
     });
 
     afterEach(function(){
-      Backbone.Syphon.KeySplitter = this.keySplitter;
+      Syphon.KeySplitter = this.keySplitter;
     });
 
     it("has a property defined",function() {
@@ -166,7 +166,7 @@ describe("serializing nested key names", function(){
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view, {
+      result = Syphon.serialize(view, {
         keySplitter: function(key){
           return key.split("-");
         }

@@ -9,15 +9,15 @@ describe("key assignment validators", function(){
 
     var result;
     beforeEach(function(){
-      var validators = new Backbone.Syphon.KeyAssignmentValidatorSet();
-      validators.registerDefault(function($el, key, value){
-        return $el.data("stuff") == "bar";
+      var validators = new Syphon.KeyAssignmentValidatorSet();
+      validators.registerDefault(function(el, key, value){
+        return $(el).data("stuff") == "bar";
       });
 
       var view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view, {
+      result = Syphon.serialize(view, {
         keyAssignmentValidators: validators
       });
     });

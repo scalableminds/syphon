@@ -1,5 +1,5 @@
 describe("serializing a form", function(){
-  
+
   describe("when serializing a text input", function(){
     var View = Backbone.View.extend({
       render: function(){
@@ -13,7 +13,7 @@ describe("serializing a form", function(){
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view);
+      result = Syphon.serialize(view);
     });
 
     it("should return an object with a key from the text input name", function(){
@@ -38,7 +38,7 @@ describe("serializing a form", function(){
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view);
+      result = Syphon.serialize(view);
     });
 
     it("should not serialize the value to the target object", function(){
@@ -60,7 +60,7 @@ describe("serializing a form", function(){
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view);
+      result = Syphon.serialize(view);
     });
 
     it("should have the textarea's value", function(){
@@ -81,7 +81,7 @@ describe("serializing a form", function(){
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view);
+      result = Syphon.serialize(view);
     });
 
     it("should have the textarea's value", function(){
@@ -104,7 +104,7 @@ describe("serializing a form", function(){
         view.render();
         view.$("#the-checkbox").prop("checked", true);
 
-        result = Backbone.Syphon.serialize(view);
+        result = Syphon.serialize(view);
       });
 
       it("should return an object with a value of true", function(){
@@ -119,7 +119,7 @@ describe("serializing a form", function(){
         view = new View();
         view.render();
 
-        result = Backbone.Syphon.serialize(view);
+        result = Syphon.serialize(view);
       });
 
       it("should return an object with a value of false", function(){
@@ -142,7 +142,7 @@ describe("serializing a form", function(){
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view);
+      result = Syphon.serialize(view);
     });
 
     it("should not have the button's value", function(){
@@ -163,7 +163,7 @@ describe("serializing a form", function(){
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view);
+      result = Syphon.serialize(view);
     });
 
     it("should not have the button's value", function(){
@@ -184,7 +184,7 @@ describe("serializing a form", function(){
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view);
+      result = Syphon.serialize(view);
     });
 
     it("should not have the button's value", function(){
@@ -205,7 +205,7 @@ describe("serializing a form", function(){
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view);
+      result = Syphon.serialize(view);
     });
 
     it("should only return the value of the selected radio button", function(){
@@ -225,7 +225,7 @@ describe("serializing a form", function(){
       view = new View();
       view.render();
 
-      result = Backbone.Syphon.serialize(view);
+      result = Syphon.serialize(view);
     });
 
     it("retrieves the inputs' values", function() {
@@ -240,7 +240,7 @@ describe("serializing a form", function(){
     beforeEach(function() {
       form = $("<form><input type='text' name='foo' value='bar'></form>")[0];
 
-      result = Backbone.Syphon.serialize(form);
+      result = Syphon.serialize(form);
     });
 
     it("retrieves the inputs' values", function() {

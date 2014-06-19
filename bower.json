@@ -1,0 +1,27 @@
+{
+  "name": "syphon",
+  "version": "0.5.0",
+  "homepage": "https://github.com/scalableminds/syphon",
+  "authors": [
+    "Norman Rzepka <norman@scm.io>"
+  ],
+  "description": "Serialize/Deserialize forms to JSON",
+  "main": "dist/syphon.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "",
+    "jquery": ""
+  }
+}

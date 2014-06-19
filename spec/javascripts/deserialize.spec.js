@@ -12,10 +12,10 @@ describe("deserializing an object into a form", function(){
     beforeEach(function(){
       view = new View();
       view.render();
-      
-      Backbone.Syphon.deserialize(view, { foo: "bar" });
+
+      Syphon.deserialize(view, { foo: "bar" });
     });
-    
+
     it("should set the input's value to the corresponding value in the given object", function(){
       var result = view.$('input[name=foo]').val();
       expect(result).toBe("bar");
@@ -35,7 +35,7 @@ describe("deserializing an object into a form", function(){
       view = new View();
       view.render();
 
-      Backbone.Syphon.deserialize(view, { foo: "bar" });
+      Syphon.deserialize(view, { foo: "bar" });
     });
 
     it("should set the input's value to the corresponding value in the given object", function(){
@@ -57,9 +57,9 @@ describe("deserializing an object into a form", function(){
       view = new View();
       view.render();
 
-      Backbone.Syphon.deserialize(view, { foo: "bar" });
+      Syphon.deserialize(view, { foo: "bar" });
     });
-    
+
     it("should select the option corresponding to the value in the given object", function(){
       var result = view.$("select").val();
       expect(result).toBe("bar");
@@ -80,7 +80,7 @@ describe("deserializing an object into a form", function(){
         view = new View();
         view.render();
 
-        Backbone.Syphon.deserialize(view, { chk: true });
+        Syphon.deserialize(view, { chk: true });
       });
 
       it("should check the checkbox", function(){
@@ -97,7 +97,7 @@ describe("deserializing an object into a form", function(){
         view.render();
         view.$("#the-checkbox").prop("checked", true);
 
-        Backbone.Syphon.deserialize(view, { chk: false });
+        Syphon.deserialize(view, { chk: false });
       });
 
       it("should uncheck the checkbox", function(){
@@ -122,7 +122,7 @@ describe("deserializing an object into a form", function(){
       view.render();
       value = view.$("button[name=btn]").val();
 
-      Backbone.Syphon.deserialize(view, { btn: "foo" });
+      Syphon.deserialize(view, { btn: "foo" });
     });
 
     it("the button value should remain unchanged", function(){
@@ -145,7 +145,7 @@ describe("deserializing an object into a form", function(){
       view.render();
       value = view.$("input[name=btn]").val();
 
-      Backbone.Syphon.deserialize(view, { btn: "foo" });
+      Syphon.deserialize(view, { btn: "foo" });
     });
 
     it("the input value should remain unchanged", function(){
@@ -153,7 +153,7 @@ describe("deserializing an object into a form", function(){
       expect(result).toBe(value);
     });
   });
-  
+
   describe("when deserializing into an input with type of 'reset'", function(){
     var View = Backbone.View.extend({
       render: function(){
@@ -168,7 +168,7 @@ describe("deserializing an object into a form", function(){
       view.render();
       value = view.$("input[name=btn]").val();
 
-      Backbone.Syphon.deserialize(view, { btn: "foo" });
+      Syphon.deserialize(view, { btn: "foo" });
     });
 
     it("the input should not have a value", function(){
@@ -190,7 +190,7 @@ describe("deserializing an object into a form", function(){
       view = new View();
       view.render();
 
-      Backbone.Syphon.deserialize(view, { foo: "bar" });
+      Syphon.deserialize(view, { foo: "bar" });
     });
 
     it("should select the corresponding radio button", function(){
@@ -212,7 +212,7 @@ describe("deserializing an object into a form", function(){
       view = new View();
       view.render();
 
-      Backbone.Syphon.deserialize(view, { foo: 2 });
+      Syphon.deserialize(view, { foo: 2 });
     });
 
     it("should select the corresponding radio button", function(){
@@ -228,7 +228,7 @@ describe("deserializing an object into a form", function(){
     beforeEach(function(){
       form = $("<form><input type='text' name='foo' value='bar'></form>")[0];
 
-      Backbone.Syphon.deserialize(form, { foo: "bar" });
+      Syphon.deserialize(form, { foo: "bar" });
     });
 
     it("should set the input's value to the corresponding value in the given object", function(){
