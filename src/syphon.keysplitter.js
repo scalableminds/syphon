@@ -1,4 +1,4 @@
-// Backbone.Syphon.KeySplitter
+// Syphon.KeySplitter
 // ---------------------------
 
 // This function is used to split DOM element keys in to an array
@@ -7,7 +7,7 @@
 //
 // Override this method to use a custom key splitter, such as:
 // `<input name="foo.bar.baz">`, `return key.split(".")`
-Backbone.Syphon.KeySplitter = function(key){
+Syphon.KeySplitter = function(key){
   var matches = key.match(/[^\[\]]+/g);
   var lastKey;
 
@@ -16,5 +16,5 @@ Backbone.Syphon.KeySplitter = function(key){
     matches.push([lastKey]);
   }
 
-  return matches;
+  return matches || [];
 };

@@ -1,3 +1,10 @@
+## v0.5.0
+
+* Removed all Backbone dependencies, because they aren't neccessary at all. It is still compatible with Backbone, though.
+* Removed some jQuery dependencies. However the default input writers and readers still require jQuery for its `.val()` method.
+* For nested objects, it is possible to include or exclude complete sub-trees.
+* UMD definition
+
 ## v0.4.1
 
 * Fixed issue w/ field that has no name (or other specified identifier)

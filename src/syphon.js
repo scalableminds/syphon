@@ -1,4 +1,4 @@
-Backbone.Syphon = (function(Backbone, $, _){
+(function(_){
   var Syphon = {};
 
   // Ignore Element Types
@@ -26,21 +26,20 @@ Backbone.Syphon = (function(Backbone, $, _){
 
     // Process all of the elements
     _.each(elements, function(el){
-      var $el = $(el);
-      var type = getElementType($el); 
+      var type = getElementType(el);
 
       // Get the key for the input
       var keyExtractor = config.keyExtractors.get(type);
-      var key = keyExtractor($el);
+      var key = keyExtractor(el);
 
       // Get the value for the input
       var inputReader = config.inputReaders.get(type);
-      var value = inputReader($el);
+      var value = inputReader(el);
 
       // Get the key assignment validator and make sure
       // it's valid before assigning the value to the key
       var validKeyAssignment = config.keyAssignmentValidators.get(type);
-      if (validKeyAssignment($el, key, value)){
+      if (validKeyAssignment(el, key, value)){
         var keychain = config.keySplitter(key);
         data = assignKeyValue(data, keychain, value);
       }
@@ -49,7 +48,7 @@ Backbone.Syphon = (function(Backbone, $, _){
     // Done; send back the results.
     return data;
   };
-  
+
   // Use the given JSON object to populate
   // all of the form inputs, in this view.
   // Alternately, pass a form element directly
@@ -66,19 +65,18 @@ Backbone.Syphon = (function(Backbone, $, _){
 
     // Process all of the elements
     _.each(elements, function(el){
-      var $el = $(el);
-      var type = getElementType($el); 
+      var type = getElementType(el);
 
       // Get the key for the input
       var keyExtractor = config.keyExtractors.get(type);
-      var key = keyExtractor($el);
+      var key = keyExtractor(el);
 
       // Get the input writer and the value to write
       var inputWriter = config.inputWriters.get(type);
       var value = flattenedData[key];
 
       // Write the value to the input
-      inputWriter($el, value);
+      inputWriter(el, value);
     });
   };
 
@@ -91,27 +89,35 @@ Backbone.Syphon = (function(Backbone, $, _){
     var form = getForm(view);
     var elements = form.elements;
 
-    elements = _.reject(elements, function(el){
-      var reject;
+    elements = _.filter(elements, function(el){
       var type = getElementType(el);
       var extractor = config.keyExtractors.get(type);
-      var identifier = extractor($(el));
-     
-      var foundInIgnored = _.include(config.ignoredTypes, type);
-      var foundInInclude = _.include(config.include, identifier);
-      var foundInExclude = _.include(config.exclude, identifier);
+      var identifier = extractor(el);
 
-      if (foundInInclude){
-        reject = false;
-      } else {
-        if (config.include){
-          reject = true;
-        } else {
-          reject = (foundInExclude || foundInIgnored);
-        }
+      if (identifier === "") {
+        return false;
       }
 
-      return reject;
+      var foundInIgnored = _.include(config.ignoredTypes, type);
+
+      var keychain = config.keySplitter(identifier);
+      var keychainPermutations =
+        keychain.map(function (keychainItem, i) {
+          return keychain.slice(0, i + 1).reduce(config.keyJoiner);
+        });
+
+      var foundInInclude =
+        _.intersection(config.include, keychainPermutations).length !== 0;
+      var foundInExclude =
+        _.intersection(config.exclude, keychainPermutations).length !== 0;
+
+      if (foundInInclude){
+        return true;
+      } else if (config.include) {
+        return false;
+      } else {
+        return !(foundInExclude || foundInIgnored);
+      }
     });
 
     return elements;
@@ -123,32 +129,32 @@ Backbone.Syphon = (function(Backbone, $, _){
   // the element when the element is not an `<input>`.
   var getElementType = function(el){
     var typeAttr;
-    var $el = $(el);
-    var tagName = $el[0].tagName;
+    var tagName = el.tagName;
     var type = tagName;
 
     if (tagName.toLowerCase() === "input"){
-      typeAttr = $el.attr("type");
+      typeAttr = el.getAttribute("type");
       if (typeAttr){
         type = typeAttr;
       } else {
         type = "text";
       }
     }
-    
+
     // Always return the type as lowercase
     // so it can be matched to lowercase
     // type registrations.
     return type.toLowerCase();
   };
-  
-  // If a form element is given, just return it. 
+
+  // If a form element is given, just return it.
   // Otherwise, get the form element from the view.
   var getForm = function(viewOrForm){
-    if (_.isUndefined(viewOrForm.$el) && viewOrForm.tagName.toLowerCase() === 'form'){
-      return viewOrForm;
+    var el = viewOrForm.el || viewOrForm;
+    if (el.tagName.toLowerCase() === 'form' || el.tagName.toLowerCase() === 'fieldset') {
+      return el;
     } else {
-      return viewOrForm.$el.is("form") ? viewOrForm.el : viewOrForm.$("form")[0];
+      return el.querySelector("form,fieldset");
     }
   };
 
@@ -156,7 +162,7 @@ Backbone.Syphon = (function(Backbone, $, _){
   // default values.
   var buildConfig = function(options){
     var config = _.clone(options) || {};
-    
+
     config.ignoredTypes = _.clone(Syphon.ignoredTypes);
     config.inputReaders = config.inputReaders || Syphon.InputReaders;
     config.inputWriters = config.inputWriters || Syphon.InputWriters;
@@ -164,17 +170,17 @@ Backbone.Syphon = (function(Backbone, $, _){
     config.keySplitter = config.keySplitter || Syphon.KeySplitter;
     config.keyJoiner = config.keyJoiner || Syphon.KeyJoiner;
     config.keyAssignmentValidators = config.keyAssignmentValidators || Syphon.KeyAssignmentValidators;
-    
+
     return config;
   };
 
-  // Assigns `value` to a parsed JSON key. 
+  // Assigns `value` to a parsed JSON key.
   //
   // The first parameter is the object which will be
   // modified to store the key/value pair.
   //
-  // The second parameter accepts an array of keys as a 
-  // string with an option array containing a 
+  // The second parameter accepts an array of keys as a
+  // string with an option array containing a
   // single string as the last option.
   //
   // The third parameter is the value to be assigned.
@@ -182,12 +188,12 @@ Backbone.Syphon = (function(Backbone, $, _){
   // Examples:
   //
   // `["foo", "bar", "baz"] => {foo: {bar: {baz: "value"}}}`
-  // 
+  //
   // `["foo", "bar", ["baz"]] => {foo: {bar: {baz: ["value"]}}}`
-  // 
+  //
   // When the final value is an array with a string, the key
   // becomes an array, and values are pushed in to the array,
-  // allowing multiple fields with the same name to be 
+  // allowing multiple fields with the same name to be
   // assigned to the array.
   var assignKeyValue = function(obj, keychain, value) {
     if (!keychain){ return obj; }
@@ -212,7 +218,7 @@ Backbone.Syphon = (function(Backbone, $, _){
     if (keychain.length > 0){
       assignKeyValue(obj[key], keychain, value);
     }
-    
+
     return obj;
   };
 
@@ -236,7 +242,7 @@ Backbone.Syphon = (function(Backbone, $, _){
   // }
   // ```
   //
-  // With a KeyJoiner that uses [ ] square brackets, 
+  // With a KeyJoiner that uses [ ] square brackets,
   // should produce this output:
   //
   // ```js
@@ -277,18 +283,18 @@ Backbone.Syphon = (function(Backbone, $, _){
   };
 
   return Syphon;
-})(Backbone, jQuery, _);
+})(_);
 
-//= backbone.syphon.typeregistry.js
+//= syphon.typeregistry.js
 
-//= backbone.syphon.keyextractors.js
+//= syphon.keyextractors.js
 
-//= backbone.syphon.inputreaders.js
+//= syphon.inputreaders.js
 
-//= backbone.syphon.inputwriters.js
+//= syphon.inputwriters.js
 
-//= backbone.syphon.keyassignmentvalidators.js
+//= syphon.keyassignmentvalidators.js
 
-//= backbone.syphon.keysplitter.js
+//= syphon.keysplitter.js
 
-//= backbone.syphon.keyjoiner.js
+//= syphon.keyjoiner.js
