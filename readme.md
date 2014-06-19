@@ -1,69 +1,45 @@
-Backbone.Syphon - serialize the forms in your
-Backbone.Views into a JSON object for use with 
-Backbone's models.
+Serialize/Deserialize forms to JSON
+> Forked from [Syphon](https://github.com/marionettejs/syphon)
 
-## Backbone.Syphon
+## Syphon
 
-Working with form elements in a Backbone view can become
-very tedious very quickly. You will either end up writing
-a lot of repetitive code to read values from the form,
-or end up using a key-value-observer or data-binding
-solution that automatically populates your model for you.
-While these are valid options and I highly recommend
-understanding how they work, there are times when these 
-options are not the best choice for your application.
+Working with form elements in a Backbone view can become very tedious very quickly. You will either end up writing a lot of repetitive code to read values from the form, or end up using a key-value-observer or data-binding solution that automatically populates your model for you. While these are valid options and I highly recommend understanding how they work, there are times when these options are not the best choice for your application.
 
-Backbone.Syphon aims to make it easy to serialize the
-form inputs of a Backbone.View in to a simple JSON object
-that contains all of the values from the form.
+Syphon aims to make it easy to serialize the form inputs of a view in to a simple JSON object that contains all of the values from the form.
 
-## Source Code And Downloads
 
-You can download the raw source code from the "src" 
-folder above, or grab one of the builds from the 
-"lib" folder. 
+## Install
+### Direct Download
+* Development: [syphon.js](https://raw.github.com/scalableminds/syphon/master/dist/syphon.js)
+* Production: [syphon.min.js](https://raw.github.com/scalableminds/syphon/master/dist/syphon.min.js)
 
-To get the latest stable release, use these links 
-which point to the 'master' branch's builds:
+### Package managers
+* Bower
+* npm
 
-### Standard Builds
+### Module managers
+* RequireJS modules (`define`)
+* Node-style modules (`require`)
+* Globals (`window.Syphon`)
 
-Development: [backbone.syphon.js](https://raw.github.com/derickbailey/backbone.syphon/master/lib/backbone.syphon.js)
 
-Production: [backbone.syphon.min.js](https://raw.github.com/derickbailey/backbone.syphon/master/lib/backbone.syphon.min.js)
+## Dependencies
+* [underscore](http://underscorejs.org/) or [lodash](http://lodash.com/)
+* [jQuery](http://jquery.com/)
 
-### AMD/RequireJS Builds
-
-Development: [backbone.syphon.js](https://raw.github.com/derickbailey/backbone.syphon/master/lib/amd/backbone.syphon.js)
-
-Production: [backbone.syphon.min.js](https://raw.github.com/derickbailey/backbone.syphon/master/lib/amd/backbone.syphon.min.js)
 
 ## Documentation
 
-This readme file contains basic usage examples.
-
 ### Extensibility / API Documentation
 
-If you need to modify the behaviors of Syphon, see the API document. It
-contains the documentation for the core APIs that Syphon exposes, with
+If you need to modify the behaviors of Syphon, see the API documentation. It contains the documentation for the core APIs that Syphon exposes, with
 examples on how to change the behaviors of Syphon.
 
-##### [View The API Documentation](https://github.com/derickbailey/backbone.syphon/blob/master/apidoc.md)
+##### [View The API Documentation](https://github.com/scalableminds/syphon/blob/master/apidoc.md)
 
-### Annotated Source Code
+## Basic Usage: Serialize
 
-Syphon has annotated source code using the Docco tool to turn
-comments in to documentation. This provides an in-depth look
-at what each section of is doing.
-
-##### [View The Annotated Source Code](http://derickbailey.github.com/backbone.syphon/docs/backbone.syphon.html)
-
-## Basic Usage : Serialize
-
-When the data from a form is needed, you can call the
-`serialize` method of `Backbone.Syphon` to retrieve an
-object literal that contains the data from your view's
-form.
+When the data from a form is needed, you can call the `serialize` method of `Syphon` to retrieve a JSON object that contains the data from your view's form.
 
 ```js
 Backbone.View.extend({
@@ -74,7 +50,7 @@ Backbone.View.extend({
   formSubmitted: function(e){
     e.preventDefault();
 
-    var data = Backbone.Syphon.serialize(this);
+    var data = Syphon.serialize(this);
     this.model.set(data);
 
     this.model.save();
@@ -100,7 +76,7 @@ attribute as the key in the serialized object.
 ```
 
 ```js
-Backbone.Syphon.serialize(view);
+Syphon.serialize(view);
 
 // will produce => 
 
@@ -113,7 +89,7 @@ Backbone.Syphon.serialize(view);
 
 For information on how to change this behavior, see the Key Extractors 
 section of the 
-[API Documentation](https://github.com/derickbailey/backbone.syphon/blob/master/apidoc.md).
+[API Documentation](https://github.com/scalableminds/syphon/blob/master/apidoc.md).
 
 ### Values Retrieved By jQuery `.val()` Call
 
@@ -128,7 +104,7 @@ to get the value of the input element.
 ```
 
 ```js
-Backbone.Syphon.serialize(view);
+Syphon.serialize(form);
 
 // will produce => 
 
@@ -140,7 +116,7 @@ Backbone.Syphon.serialize(view);
 
 For information on how to change this behavior, see the Input Readers
 section of the 
-[API Documentation](https://github.com/derickbailey/backbone.syphon/blob/master/apidoc.md).
+[API Documentation](https://github.com/scalableminds/syphon/blob/master/apidoc.md).
 
 ### Checkboxes
 
@@ -155,7 +131,7 @@ not it is checked.
 ```
 
 ```js
-Backbone.Syphon.serialize(view);
+Syphon.serialize(form);
 
 // will produce => 
 
@@ -167,7 +143,7 @@ Backbone.Syphon.serialize(view);
 
 For information on how to change this behavior, see the Input Readers
 section of the 
-[API Documentation](https://github.com/derickbailey/backbone.syphon/blob/master/apidoc.md).
+[API Documentation](https://github.com/scalableminds/syphon/blob/master/apidoc.md).
 
 ### Radio Button Groups
 
@@ -184,7 +160,7 @@ produce a single value, from the selected radio button.
 ```
 
 ```js
-Backbone.Syphon.serialize(view);
+Syphon.serialize(form);
 
 // will produce => 
 
@@ -195,7 +171,7 @@ Backbone.Syphon.serialize(view);
 
 This behavior can be changed by registering a different set of Key
 Extractors, Input Readers, and Key Assignment Validators. See the full
-[API Documentation](https://github.com/derickbailey/backbone.syphon/blob/master/apidoc.md).
+[API Documentation](https://github.com/scalableminds/syphon/blob/master/apidoc.md).
 for more information on these.
 
 ## Basic Usage : Deserialize
@@ -204,7 +180,7 @@ Syphon also allows you to deserialize an object's values back on to a
 form. It uses the same conventions and configuration as the serialization
 process, with the introduction of Input Writers to handle populating the
 form fields with the values. See the full 
-[API Documentation](https://github.com/derickbailey/backbone.syphon/blob/master/apidoc.md).
+[API Documentation](https://github.com/scalableminds/syphon/blob/master/apidoc.md).
 for more information on Input Writers.
 
 ```html
@@ -220,7 +196,7 @@ var data = {
   b: "bar"
 };
 
-Backbone.Syphon.deserialize(this, data);
+Syphon.deserialize(form, data);
 ```
 
 This will populate the form input elements with the correct values from
@@ -252,13 +228,12 @@ a specific call to `serialize`.
 
 ```js
 // ignore all <textarea> input elements
-Backbone.Syphon.ignoredTypes.push("textarea");
+Syphon.ignoredTypes.push("textarea");
 ```
 
 ## Serializing Nested Attributes And Field Names
 
-Syphon will parse nested attribute names and create a nested result object,
-using the Rails standard of `name="foo[bar][baz]"` by default.
+Syphon will parse nested attribute names and create a nested result object, using the Rails notation of `name="foo[bar][baz]"` by default.
 
 ```html
 <form>
@@ -282,10 +257,7 @@ will produce
 
 ## Include / Exclude Specific Fields
 
-You can include or exclude specific fields as needed. Inclusion is given
-priority and specifying fields to include will force Syphon to exclude all
-other fields. Including a field that is ignore by it's type will also force
-the field to be included.
+You can include or exclude specific fields as needed. Inclusion is given priority and specifying fields to include will force Syphon to exclude all other fields. Including a field that is ignore by it's type will also force the field to be included. You can also include/exclude nested sub-trees.
 
 ### Examples
 
@@ -295,7 +267,8 @@ Given this HTML:
 <form>
   <input name="a" value="a-value">
   <input name="b" value="b-value">
-  <input name="c" value="c-value">
+  <input name="c[a]" value="c-a-value">
+  <input name="c[b]" value="c-b-value">
   <button name="d" value="d-value">
 </form>
 ```
@@ -303,22 +276,24 @@ Given this HTML:
 The following will occur:
 
 ```js
-// include a, b only
-Backbone.Syphon.serialize(view, {
-  include: ["a", "b"]
+// include a, c only
+Syphon.serialize(view, {
+  include: ["a", "c"]
 });
 
 // will produce =>
 
 {
   a: "a-value",
-  b: "b-value"
+  c: {
+  	a: "c-a-value",
+  	b: "c-b-value"  }
 }
 ```
 
 ```js
 // include the normally excluded (button) "d"
-Backbone.Syphon.serialize(view, {
+Syphon.serialize(view, {
   include: ["a", "d"]
 });
 
@@ -332,21 +307,21 @@ Backbone.Syphon.serialize(view, {
 
 ```js
 // exclude a
-Backbone.Syphon.serialize(view, {
-  exclude: ["a"]
+Syphon.serialize(view, {
+  exclude: ["c"]
 });
 
 // will produce =>
 
 {
-  b: "b-value",
-  c: "c-value"
+  a: "a-value",
+  b: "b-value"
 }
 ```
 
 ```js
 // include a and b, exclude b and c
-Backbone.Syphon.serialize(view, {
+Syphon.serialize(view, {
   include: ["a", "b"],
   exclude: ["b", "c"]
 });
@@ -361,8 +336,7 @@ Backbone.Syphon.serialize(view, {
 
 ### Include / Exclude Based On Key Extractors
 
-The include / exclude process uses the registered Key Extractors to determine
-which fields to include / exclude. 
+The include / exclude process uses the registered Key Extractors to determine which fields to include / exclude. 
 
 This means if you are only using the default Key Extractor which uses 
 the "name" attribute, all fields will be included or excluded based on 
@@ -383,17 +357,17 @@ determining which fields to include / exclude.
 
 ```js
 // By default, use the "id"
-Backbone.Syphon.KeyExtractors.registerDefault(function($el){
-  return $el.prop("id");
+Syphon.KeyExtractors.registerDefault(function(el){
+  return el.id;
 });
 
 // For radio buttons, use the "name"
-Backbone.Syphon.KeyExtractors.register("radio", function($el){
-  return $el.prop("name");
+Syphon.KeyExtractors.register("radio", function(el){
+  return el.name;
 });
 
 // Serialize the form
-Backbone.Syphon.serialize(view, {
+Syphon.serialize(view, {
   exclude: ["a", "b"]
 });
 
@@ -404,8 +378,6 @@ Backbone.Syphon.serialize(view, {
 }
 ```
 
-For more information on Key Extractors, see the full 
-[API Documentation](https://github.com/derickbailey/backbone.syphon/blob/master/apidoc.md).
 
 ## Other Options
 
@@ -419,16 +391,16 @@ Key extractors are used to generate the "key" in the `{key: "value"}`
 result. You can specify a `KeyExtractorSet` as part of the options:
 
 ```js
-extractors = new Backbone.Syphon.KeyExtractorSet();
+extractors = new Syphon.KeyExtractorSet();
 // configure it ...
 
-Backbone.Syphon.serialize({
+Syphon.serialize({
   keyExtractors: extractors
 });
 ```
 
 For more information on Key Extractors, see the full 
-[API Documentation](https://github.com/derickbailey/backbone.syphon/blob/master/apidoc.md).
+[API Documentation](https://github.com/scalableminds/syphon/blob/master/apidoc.md).
 
 ### Input Readers
 
@@ -436,16 +408,16 @@ Input Readers are used to generate the "value" in the `{key: "value"}`
 result. You can specify a `InputReadetSet` as part of the options:
 
 ```js
-readers = new Backbone.Syphon.InputReaderSet();
+readers = new Syphon.InputReaderSet();
 // configure it ...
 
-Backbone.Syphon.serialize({
+Syphon.serialize({
   inputReaders: readers
 });
 ```
 
 For more information on Input Readers, see the full 
-[API Documentation](https://github.com/derickbailey/backbone.syphon/blob/master/apidoc.md).
+[API Documentation](https://github.com/scalableminds/syphon/blob/master/apidoc.md).
 
 ### Input Writers
 
@@ -455,7 +427,7 @@ specify input writers in the `deserialize` method. That will come
 soon, hopefully.
 
 For more information on Input Writers, see the full 
-[API Documentation](https://github.com/derickbailey/backbone.syphon/blob/master/apidoc.md).
+[API Documentation](https://github.com/scalableminds/syphon/blob/master/apidoc.md).
 
 ### Key Assignment Validators
 
@@ -464,64 +436,42 @@ in the context of an element. You can specify a `InputReadetSet` as part
 of the options:
 
 ```js
-validators = new Backbone.Syphon.KeyAssignmentValidators();
+validators = new Syphon.KeyAssignmentValidators();
 // configure it ...
 
-Backbone.Syphon.serialize({
+Syphon.serialize({
   keyAssignmentValidators: validators
 });
 ```
 
 For more information on Key Assignment Validators, see the full 
-[API Documentation](https://github.com/derickbailey/backbone.syphon/blob/master/apidoc.md).
+[API Documentation](https://github.com/scalableminds/syphon/blob/master/apidoc.md).
 
 ## Current Limitations
 
-There some known limitations in Backbone.Syphon, partially by design and
+There some known limitations in Syphon, partially by design and
 partially implemented as default behaivors. 
 
-* You must have a `<form>` within your view's `$el`
+* You must have a `<form>` or a `<fieldset>` within your view's `el`
 * An input of type `checkbox` will return a boolean value. This can be
 overriden by replacing the Input Reader for checkboxes.
 
-## Building Backbone.Syphon
+## Build and Test
 
-If you wish to build Backbone.Syphon on your system, you will
-need Ruby to run the Jasmine specs, and NodeJS to run the
-grunt build. 
 
-### To Run The Jasmine Specs
+1. Be sure you have NodeJS and NPM installed on your system.
+2. Run `npm install -g grunt` to install the grunt build system.
+3. Run `npm install -d` to install the local dependencies.
+4. From the project folder, run `grunt` to produce a build and run the tests.
 
-1. Be sure you have Bundler installed in your Ruby Gems. Then
-run `bundle install` from the project folder
-
-2. Once this is done, you can run `rake jasmine` to run the 
-Jasmine server
-
-3. Point your browser at `http://localhost:8888` and you will
-see all of the specs for Backbone.Syphon
-
-### To Build The Packages
-
-1. Be sure you have NodeJS and NPM installed on your system
-
-2. Run `npm install -g grunt` to install the grunt build system
-
-3. From the project folder, run `grunt` to produce a build
-
-## Screencasts
-
-I've recorded several screencasts on how I built Syphon.
-
-* [WatchMeCode: Episode 7](http://watchmecode.net/backbone-plugin): covers the initial project setup, build and release
-* [WatchMeCode: Episode 8](http://watchmecode.net/amd-builds-with-grunt): covers setting up an AMD build along side the standard build
 
 ## Release Notes
 
-See the [changelog.md]((https://github.com/derickbailey/backbone.syphon/blob/master/changelog.md) file.
+See the [changelog.md](https://github.com/scalableminds/syphon/blob/master/changelog.md) file.
 
 ## Legal Mumbo Jumbo (MIT License)
 
+Copyright (c) 2014 Norman Rzepka, scalable minds  
 Copyright (c) 2012 Derick Bailey, Muted Solutions, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:

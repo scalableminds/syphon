@@ -4,6 +4,7 @@
 * Removed some jQuery dependencies. However the default input writers and readers still require jQuery for its `.val()` method.
 * For nested objects, it is possible to include or exclude complete sub-trees.
 * UMD definition
+* Fixed grunt tasks. Added Jasmine test runner as grunt task.
 
 ## v0.4.1
 
