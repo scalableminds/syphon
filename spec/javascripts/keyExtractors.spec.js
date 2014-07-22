@@ -1,6 +1,6 @@
 describe('key extractors', function() {
   beforeEach(function() {
-    this.defaultExtractor = Backbone.Syphon.KeyExtractors.get();
+    this.defaultExtractor = Syphon.KeyExtractors.get();
   });
 
   describe('when registering a global key extractor', function() {
@@ -15,18 +15,18 @@ describe('key extractors', function() {
         }
       });
 
-      Backbone.Syphon.KeyExtractors.registerDefault(function() {
+      Syphon.KeyExtractors.registerDefault(function() {
         return 'foo';
       });
 
       this.view = new this.View();
       this.view.render();
 
-      this.result = Backbone.Syphon.serialize(this.view);
+      this.result = Syphon.serialize(this.view);
     });
 
     afterEach(function() {
-      Backbone.Syphon.KeyExtractors.registerDefault(this.defaultExtractor);
+      Syphon.KeyExtractors.registerDefault(this.defaultExtractor);
     });
 
     it('should return an object that has a key produced by the key extractor', function() {
@@ -47,18 +47,18 @@ describe('key extractors', function() {
         }
       });
 
-      Backbone.Syphon.KeyExtractors.register('text', function() {
+      Syphon.KeyExtractors.register('text', function() {
         return 'foo';
       });
 
       this.view = new this.View();
       this.view.render();
 
-      this.result = Backbone.Syphon.serialize(this.view);
+      this.result = Syphon.serialize(this.view);
     });
 
     afterEach(function() {
-      Backbone.Syphon.KeyExtractors.unregister('text');
+      Syphon.KeyExtractors.unregister('text');
     });
 
     it('should use the specific extractor for inputs of that type', function() {
@@ -82,7 +82,7 @@ describe('key extractors', function() {
         }
       });
 
-      this.extractors = new Backbone.Syphon.KeyExtractorSet();
+      this.extractors = new Syphon.KeyExtractorSet();
       this.extractors.registerDefault(function($el) {
         return $el.data('stuff');
       });
@@ -90,7 +90,7 @@ describe('key extractors', function() {
       this.view = new this.View();
       this.view.render();
 
-      this.result = Backbone.Syphon.serialize(this.view, {
+      this.result = Syphon.serialize(this.view, {
         keyExtractors: this.extractors
       });
     });

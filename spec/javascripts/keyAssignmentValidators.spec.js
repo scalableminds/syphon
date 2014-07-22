@@ -12,7 +12,7 @@ describe('key assignment validators', function() {
         }
       });
 
-      this.validators = new Backbone.Syphon.KeyAssignmentValidatorSet();
+      this.validators = new Syphon.KeyAssignmentValidatorSet();
       this.validators.registerDefault(function($el) {
         return $el.data('stuff') === 'bar';
       });
@@ -20,7 +20,7 @@ describe('key assignment validators', function() {
       this.view = new this.View();
       this.view.render();
 
-      this.result = Backbone.Syphon.serialize(this.view, {
+      this.result = Syphon.serialize(this.view, {
         keyAssignmentValidators: this.validators
       });
     });

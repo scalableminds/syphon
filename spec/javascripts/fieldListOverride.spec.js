@@ -20,7 +20,7 @@ describe('override the list of fields to include or ignore', function() {
       this.view = new this.View();
       this.view.render();
 
-      this.result = Backbone.Syphon.serialize(this.view, {
+      this.result = Syphon.serialize(this.view, {
         include: ['a', 'b']
       });
     });
@@ -42,7 +42,7 @@ describe('override the list of fields to include or ignore', function() {
       this.view = new this.View();
       this.view.render();
 
-      this.result = Backbone.Syphon.serialize(this.view, {
+      this.result = Syphon.serialize(this.view, {
         include: ['e']
       });
     });
@@ -57,7 +57,7 @@ describe('override the list of fields to include or ignore', function() {
       this.view = new this.View();
       this.view.render();
 
-      this.result = Backbone.Syphon.serialize(this.view, {
+      this.result = Syphon.serialize(this.view, {
         exclude: ['a', 'b']
       });
     });
@@ -78,7 +78,7 @@ describe('override the list of fields to include or ignore', function() {
       this.view = new this.View();
       this.view.render();
 
-      this.result = Backbone.Syphon.serialize(this.view, {
+      this.result = Syphon.serialize(this.view, {
         include: ['a', 'b'],
         exclude: ['a', 'b']
       });

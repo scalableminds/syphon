@@ -9,6 +9,7 @@
     "_"                  : true,
     "Backbone"           : true,
     "Marionette"         : true,
+    "Syphon"             : true,
     "slice"              : true,
     "throwError"         : true,
 

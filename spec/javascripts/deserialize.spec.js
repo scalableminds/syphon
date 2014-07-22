@@ -14,7 +14,7 @@ describe('deserializing an object into a form', function() {
       this.view = new this.View();
       this.view.render();
 
-      Backbone.Syphon.deserialize(this.view, { foo: 'bar' });
+      Syphon.deserialize(this.view, { foo: 'bar' });
       this.result = this.view.$('input[name=foo]').val();
     });
 
@@ -38,7 +38,7 @@ describe('deserializing an object into a form', function() {
       this.view = new this.View();
       this.view.render();
 
-      Backbone.Syphon.deserialize(this.view, { foo: 'bar' });
+      Syphon.deserialize(this.view, { foo: 'bar' });
       this.result = this.view.$('textarea[name=foo]').val();
     });
 
@@ -65,7 +65,7 @@ describe('deserializing an object into a form', function() {
       this.view = new this.View();
       this.view.render();
 
-      Backbone.Syphon.deserialize(this.view, { foo: 'bar' });
+      Syphon.deserialize(this.view, { foo: 'bar' });
       this.result = this.view.$('select').val();
     });
 
@@ -92,7 +92,7 @@ describe('deserializing an object into a form', function() {
         this.view = new this.View();
         this.view.render();
 
-        Backbone.Syphon.deserialize(this.view, { chk: true });
+        Syphon.deserialize(this.view, { chk: true });
         this.result = this.view.$('#the-checkbox').prop('checked');
       });
 
@@ -107,7 +107,7 @@ describe('deserializing an object into a form', function() {
         this.view.render();
         this.view.$('#the-checkbox').prop('checked', true);
 
-        Backbone.Syphon.deserialize(this.view, { chk: false });
+        Syphon.deserialize(this.view, { chk: false });
         this.result = this.view.$('#the-checkbox').prop('checked');
       });
 
@@ -133,7 +133,7 @@ describe('deserializing an object into a form', function() {
       this.view.render();
       this.value = this.view.$('button[name=btn]').val();
 
-      Backbone.Syphon.deserialize(this.view, { btn: 'foo' });
+      Syphon.deserialize(this.view, { btn: 'foo' });
       this.result = this.view.$('button[name=btn]').val();
     });
 
@@ -158,7 +158,7 @@ describe('deserializing an object into a form', function() {
       this.view.render();
       this.value = this.view.$('input[name=btn]').val();
 
-      Backbone.Syphon.deserialize(this.view, { btn: 'foo' });
+      Syphon.deserialize(this.view, { btn: 'foo' });
       this.result = this.view.$('input[name=btn]').val();
     });
 
@@ -183,7 +183,7 @@ describe('deserializing an object into a form', function() {
       this.view.render();
       this.value = this.view.$('input[name=btn]').val();
 
-      Backbone.Syphon.deserialize(this.view, { btn: 'foo' });
+      Syphon.deserialize(this.view, { btn: 'foo' });
       this.result = this.view.$('input[name=btn]').val();
     });
 
@@ -209,7 +209,7 @@ describe('deserializing an object into a form', function() {
       this.view = new this.View();
       this.view.render();
 
-      Backbone.Syphon.deserialize(this.view, { foo: 'bar' });
+      Syphon.deserialize(this.view, { foo: 'bar' });
       this.checked = this.view.$('input[name=foo][value=bar]').prop('checked');
     });
 
@@ -235,7 +235,7 @@ describe('deserializing an object into a form', function() {
       this.view = new this.View();
       this.view.render();
 
-      Backbone.Syphon.deserialize(this.view, { foo: 2 });
+      Syphon.deserialize(this.view, { foo: 2 });
       this.checked = this.view.$('input[name=foo][value=2]').prop('checked');
     });
 
@@ -252,7 +252,7 @@ describe('deserializing an object into a form', function() {
         '</form>'
       )[0];
 
-      Backbone.Syphon.deserialize(this.form, { foo: 'bar' });
+      Syphon.deserialize(this.form, { foo: 'bar' });
       this.result = $(this.form).find('input[name=foo]').val();
     });
 

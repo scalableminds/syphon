@@ -16,7 +16,7 @@ describe('serializing nested key names', function() {
       this.view = new this.View();
       this.view.render();
 
-      this.result = Backbone.Syphon.serialize(this.view);
+      this.result = Syphon.serialize(this.view);
     });
 
     it('has a property defined', function() {
@@ -60,12 +60,12 @@ describe('serializing nested key names', function() {
       this.view = new this.View();
       this.view.render();
 
-      this.inputReaders = new Backbone.Syphon.InputReaderSet();
+      this.inputReaders = new Syphon.InputReaderSet();
       this.inputReaders.register('checkbox', function($el) {
         return $el.val();
       });
 
-      this.result = Backbone.Syphon.serialize(this.view, {
+      this.result = Syphon.serialize(this.view, {
         inputReaders: this.inputReaders
       });
     });
@@ -97,20 +97,20 @@ describe('serializing nested key names', function() {
         }
       });
 
-      this.keySplitter = Backbone.Syphon.KeySplitter;
+      this.keySplitter = Syphon.KeySplitter;
 
-      Backbone.Syphon.KeySplitter = function(key){
+      Syphon.KeySplitter = function(key){
         return key.split('.');
       };
 
       this.view = new this.View();
       this.view.render();
 
-      this.result = Backbone.Syphon.serialize(this.view);
+      this.result = Syphon.serialize(this.view);
     });
 
     afterEach(function() {
-      Backbone.Syphon.KeySplitter = this.keySplitter;
+      Syphon.KeySplitter = this.keySplitter;
     });
 
     it('has a property defined', function() {
@@ -155,7 +155,7 @@ describe('serializing nested key names', function() {
       this.view = new this.View();
       this.view.render();
 
-      this.result = Backbone.Syphon.serialize(this.view, {
+      this.result = Syphon.serialize(this.view, {
         keySplitter: function(key) {
           return key.split('-');
         }

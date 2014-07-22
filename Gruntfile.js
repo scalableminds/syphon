@@ -21,12 +21,22 @@ module.exports = function(grunt) {
 
     preprocess: {
       lib: {
-        src: 'src/build/backbone.syphon.js',
-        dest: 'lib/backbone.syphon.js'
+        files : [{
+          src: 'src/build/backbone.syphon.js',
+          dest: 'lib/backbone.syphon.js'
+        }, {
+          src: 'src/build/syphon.js',
+          dest: 'lib/syphon.js'
+        }]
       },
       tmp: {
-        src: 'src/build/backbone.syphon.js',
-        dest: 'tmp/backbone.syphon.js'
+        files: [{
+          src: 'src/build/backbone.syphon.js',
+          dest: 'tmp/backbone.syphon.js'
+        }, {
+          src: 'src/build/syphon.js',
+          dest: 'tmp/syphon.js'
+        }]
       }
     },
 
@@ -37,8 +47,13 @@ module.exports = function(grunt) {
         }
       },
       lib: {
-        src: '<%= preprocess.lib.dest %>',
-        dest: '<%= preprocess.lib.dest %>'
+        files: [{
+          src: '<%= preprocess.lib.files[0].dest %>',
+          dest: '<%= preprocess.lib.files[0].dest %>'
+        },{
+          src: '<%= preprocess.lib.files[1].dest %>',
+          dest: '<%= preprocess.lib.files[1].dest %>'
+        }]
       }
     },
 
@@ -48,8 +63,13 @@ module.exports = function(grunt) {
         sourceMap: true
       },
       lib: {
-        src: '<%= preprocess.lib.dest %>',
-        dest: 'lib/backbone.syphon.min.js'
+        files: [{
+          src: '<%= preprocess.lib.files[0].dest %>',
+          dest: 'lib/backbone.syphon.min.js'
+        }, {
+          src: '<%= preprocess.lib.files[1].dest %>',
+          dest: 'lib/syphon.min.js'
+        }]
       }
     },
 
@@ -88,9 +108,21 @@ module.exports = function(grunt) {
     },
 
     mochaTest: {
-      spec: {
+      withBackbone: {
         options: {
           require: 'spec/javascripts/setup/node.js',
+          reporter: 'dot',
+          clearRequireCache: true,
+          mocha: require('mocha')
+        },
+        src: [
+          'spec/javascripts/setup/helpers.js',
+          'spec/javascripts/*.spec.js'
+        ]
+      },
+      noBackbone: {
+        options: {
+          require: 'spec/javascripts/setup/node-nobackbone.js',
           reporter: 'dot',
           clearRequireCache: true,
           mocha: require('mocha')

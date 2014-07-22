@@ -8,9 +8,6 @@ var TypeRegistry = Syphon.TypeRegistry = function() {
   this.registeredTypes = {};
 };
 
-// Borrow Backbone's `extend` keyword for our TypeRegistry
-TypeRegistry.extend = Backbone.Model.extend;
-
 _.extend(TypeRegistry.prototype, {
 
   // Get the registered item by type. If nothing is
