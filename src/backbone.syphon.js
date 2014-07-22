@@ -91,14 +91,23 @@ var getInputElements = function(view, config){
   var elements = form.elements;
 
   elements = _.reject(elements, function(el){
+    /*jshint maxstatements:40 */
     var reject;
     var type = getElementType(el);
     var extractor = config.keyExtractors.get(type);
     var identifier = extractor($(el));
 
     var foundInIgnored = _.include(config.ignoredTypes, type);
-    var foundInInclude = _.include(config.include, identifier);
-    var foundInExclude = _.include(config.exclude, identifier);
+    var keychain = config.keySplitter(identifier);
+    var keychainCombinations =
+      (keychain || []).map(function (keychainItem, i) {
+        return keychain.slice(0, i + 1).reduce(config.keyJoiner);
+      });
+
+    var foundInInclude =
+      _.intersection(config.include, keychainCombinations).length !== 0;
+    var foundInExclude =
+      _.intersection(config.exclude, keychainCombinations).length !== 0;
 
     if (foundInInclude){
       reject = false;

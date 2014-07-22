@@ -282,10 +282,10 @@ will produce
 
 ## Include / Exclude Specific Fields
 
-You can include or exclude specific fields as needed. Inclusion is given
-priority and specifying fields to include will force Syphon to exclude all
-other fields. Including a field that is ignore by it's type will also force
-the field to be included.
+You can include or exclude specific fields as needed. Inclusion is given 
+priority and specifying fields to include will force Syphon to exclude all 
+other fields. Including a field that is ignore by it's type will also force 
+the field to be included. You can also include/exclude nested sub-trees.
 
 ### Examples
 
@@ -295,7 +295,8 @@ Given this HTML:
 <form>
   <input name="a" value="a-value">
   <input name="b" value="b-value">
-  <input name="c" value="c-value">
+  <input name="c[a]" value="c-a-value">
+  <input name="c[b]" value="c-b-value">
   <button name="d" value="d-value">
 </form>
 ```
@@ -303,16 +304,19 @@ Given this HTML:
 The following will occur:
 
 ```js
-// include a, b only
+// include a, c only
 Backbone.Syphon.serialize(view, {
-  include: ["a", "b"]
+  include: ["a", "c"]
 });
 
 // will produce =>
 
 {
   a: "a-value",
-  b: "b-value"
+  c: {
+    a: "c-a-value",
+    b: "c-b-value"
+  }
 }
 ```
 
@@ -333,14 +337,14 @@ Backbone.Syphon.serialize(view, {
 ```js
 // exclude a
 Backbone.Syphon.serialize(view, {
-  exclude: ["a"]
+  exclude: ["c"]
 });
 
 // will produce =>
 
 {
-  b: "b-value",
-  c: "c-value"
+  a: "a-value",
+  b: "b-value"
 }
 ```
 
